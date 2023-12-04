@@ -24,7 +24,7 @@ class BridgeGameController {
       const moving = await this.#view.validateInputHandler(async () => this.requireMoving());
 
       result = this.#domain.move(index, moving);
-      console.log(result);
+      this.#view.printMap(result);
 
       if (result.some((move) => move[moving] === 'X')) {
         const command = await this.#view.validateInputHandler(async () => this.requireCommand());
@@ -63,9 +63,11 @@ class BridgeGameController {
   }
 
   printResult() {
-    console.log('최종결과: ', this.#domain.getUserBridge());
-    this.#domain.getIsNotClear() ? console.log('실패') : console.log('성공');
-    console.log(this.#domain.getTryCount());
+    const result = this.#domain.getUserBridge();
+    const isNotClear = this.#domain.getIsNotClear();
+    const tryCount = this.#domain.getTryCount();
+
+    this.#view.printResult(result, isNotClear, tryCount);
   }
 }
 

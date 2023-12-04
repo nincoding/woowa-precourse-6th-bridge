@@ -41,6 +41,14 @@ class View {
   printStart() {
     this.#outputView.printMessage('다리 건너기 게임을 시작합니다.');
   }
+
+  printMap(result) {
+    this.#outputView.printMap(result);
+  }
+
+  printResult(result, isClear, tryCount) {
+    this.#outputView.printResult(result, isClear, tryCount);
+  }
 }
 
 export default View;

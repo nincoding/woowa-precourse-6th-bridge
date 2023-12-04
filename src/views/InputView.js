@@ -28,7 +28,7 @@ const InputView = {
    * 사용자가 이동할 칸을 입력받는다.
    */
   async readMoving() {
-    const moving = await Console.readLineAsync('\n이동할 칸을 선택해주세요. (위: U, 아래: D)\n');
+    const moving = await Console.readLineAsync('이동할 칸을 선택해주세요. (위: U, 아래: D)\n');
 
     if (Validator.isEmptyString(moving)) {
       throw new CustomError(INPUT.invalidEmpty);
