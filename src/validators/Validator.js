@@ -10,6 +10,10 @@ const Validator = {
   isValidRange(input, min, max) {
     return input >= min && input <= max;
   },
+
+  isValidMatching(input, caseOne, caseTwo) {
+    return input === caseOne || input === caseTwo;
+  },
 };
 
 export default Validator;

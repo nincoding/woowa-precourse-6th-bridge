@@ -26,6 +26,18 @@ class View {
     return bridgeSize;
   }
 
+  async getMoving() {
+    const moving = await this.validateInputHandler(() => this.#inputView.readMoving());
+
+    return moving;
+  }
+
+  async getGameCommand() {
+    const gameCommand = await this.validateInputHandler(() => this.#inputView.readGameCommand());
+
+    return gameCommand;
+  }
+
   printStart() {
     this.#outputView.printMessage('다리 건너기 게임을 시작합니다.');
   }
