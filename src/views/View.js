@@ -10,18 +10,18 @@ class View {
     this.#outputView = OutputView;
   }
 
-  async #validateHandler(callback) {
+  async validateInputHandler(callback) {
     try {
       return await callback();
     } catch ({ message }) {
       this.#outputView.printMessage(message);
 
-      return this.#validateHandler(callback);
+      return this.validateInputHandler(callback);
     }
   }
 
   async getBridgeSize() {
-    const bridgeSize = await this.#validateHandler(() => this.#inputView.readBridgeSize());
+    const bridgeSize = await this.validateInputHandler(() => this.#inputView.readBridgeSize());
 
     return bridgeSize;
   }

@@ -11,10 +11,14 @@ const InputView = {
    * 다리의 길이를 입력받는다.
    */
   async readBridgeSize() {
-    const bridgeSize = await Console.readLineAsync('다리의 길이를 입력해주세요.\n');
+    const bridgeSize = await Console.readLineAsync('\n다리의 길이를 입력해주세요.\n');
 
     if (Validator.isEmptyString(bridgeSize)) {
-      throw CustomError.inputView(INPUT.invalidEmpty);
+      throw new CustomError(INPUT.invalidEmpty);
+    }
+
+    if (!Validator.isValidInteger(bridgeSize)) {
+      throw new CustomError(INPUT.invalidInteger);
     }
 
     return bridgeSize;
