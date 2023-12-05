@@ -15,14 +15,14 @@ const Validator = {
 
   validateMoving(moving) {
     if (this.isEmptyString(moving)) throw new CustomError(ERROR_MESSAGE.invalidEmpty);
-    if (this.isValidSame(moving, GAME_CONDITION.movingUp, GAME_CONDITION.movingDown)) {
+    if (!this.isValidSame(moving, GAME_CONDITION.movingUp, GAME_CONDITION.movingDown)) {
       throw new CustomError(ERROR_MESSAGE.invalidMoving);
     }
   },
 
   validateGameCommand(gameCommand) {
     if (this.isEmptyString(gameCommand)) throw new CustomError(ERROR_MESSAGE.invalidEmpty);
-    if (this.isValidSame(gameCommand, GAME_CONDITION.retryCommand, GAME_CONDITION.endCommand)) {
+    if (!this.isValidSame(gameCommand, GAME_CONDITION.retryCommand, GAME_CONDITION.endCommand)) {
       throw new CustomError(ERROR_MESSAGE.invalidGameCommand);
     }
   },
