@@ -7,7 +7,7 @@ import BridgeRandomNumberGenerator from '../BridgeRandomNumberGenerator.js';
 class BridgeGame {
   #bridge;
   #userMoveStatus = [];
-  #tryCount;
+  #tryCount = 1;
 
   constructor(size) {
     this.#bridge = BridgeMaker.makeBridge(size, BridgeRandomNumberGenerator.generate);
@@ -33,6 +33,10 @@ class BridgeGame {
   retry() {
     this.#tryCount += 1;
     this.#userMoveStatus = [];
+  }
+
+  isFinishGame(size) {
+    return this.#userMoveStatus.length === size;
   }
 
   isClear() {
