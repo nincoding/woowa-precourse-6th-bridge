@@ -4,6 +4,7 @@ import OutputView from '../views/OutputView.js';
 
 class BridgeGameController {
   #domain;
+  #size;
 
   constructor() {
     this.#domain = new BridgeGame();
@@ -11,20 +12,42 @@ class BridgeGameController {
   }
 
   async start() {
-    await this.tryBuildBridge();
+    this.#size = await this.tryBuildBridge();
+    await this.gameStatus();
+  }
+
+  async gameStatus() {
+    let moveStatus = this.#domain.getUserBridge();
+
+    for (let index = 0; index < this.#size; index++) {
+      let moving = await this.tryBuildMoving();
+      moveStatus = this.#domain.move(index, moving);
+      OutputView.printMap(moveStatus);
+
+      if (!this.#domain.isClear()) {
+        await this.handleNonClearState();
+        break;
+      }
+    }
+  }
+
+  async handleNonClearState() {
+    const gameCommand = await this.tryBuildCommand();
+
+    if (gameCommand === 'R') {
+      this.#domain.retry();
+      await this.gameStatus();
+    }
   }
 
   async tryBuildBridge() {
     try {
       const size = await InputView.readBridgeSize();
-
       this.#domain.ready(Number(size));
-
-      await this.tryBuildMoving();
+      return size;
     } catch ({ message }) {
       OutputView.printErrorMessage(message);
-
-      await this.tryBuildBridge();
+      return await this.tryBuildBridge();
     }
   }
 
@@ -35,9 +58,23 @@ class BridgeGameController {
       return moving;
     } catch ({ message }) {
       OutputView.printErrorMessage(message);
-
-      await this.tryBuildMoving();
+      return await this.tryBuildMoving();
     }
+  }
+
+  async tryBuildCommand() {
+    try {
+      const gameCommand = await InputView.readGameCommand();
+
+      return gameCommand;
+    } catch ({ message }) {
+      OutputView.printErrorMessage(message);
+      await this.tryBuildCommand();
+    }
+  }
+
+  finishGame() {
+    console.log('게임끝');
   }
 }
 
