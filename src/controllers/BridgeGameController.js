@@ -52,7 +52,7 @@ class BridgeGameController {
     } catch ({ message }) {
       OutputView.printError(message);
 
-      return this.#tryBrideSize();
+      this.#tryBrideSize();
     }
   }
 
@@ -64,7 +64,7 @@ class BridgeGameController {
     } catch ({ message }) {
       OutputView.printError(message);
 
-      return this.#tryMoving();
+      this.#tryMoving();
     }
   }
 
@@ -76,7 +76,7 @@ class BridgeGameController {
     } catch ({ message }) {
       OutputView.printError(message);
 
-      return this.#tryGameCommand();
+      this.#tryGameCommand();
     }
   }
 
