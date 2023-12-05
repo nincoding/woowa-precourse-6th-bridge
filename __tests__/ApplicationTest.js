@@ -11,6 +11,24 @@ const mockQuestions = (inputs) => {
   });
 };
 
+const runException = async (input) => {
+  // given
+  const logSpy = getLogSpy();
+
+  const RANDOM_NUMBERS_TO_END = [1, 0, 1];
+  const INPUT_NUMBERS_TO_END = ['3', 'U', 'D', 'U', 'Q'];
+
+  mockRandoms([RANDOM_NUMBERS_TO_END]);
+  mockQuestions([input, ...INPUT_NUMBERS_TO_END]);
+
+  // when
+  const app = new App();
+  await app.play();
+
+  // then
+  expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('[ERROR]'));
+};
+
 const mockRandoms = (numbers) => {
   MissionUtils.Random.pickNumberInRange = jest.fn();
   numbers.reduce((acc, number) => {
@@ -25,16 +43,6 @@ const getLogSpy = () => {
 
 const getOutput = (logSpy) => {
   return logSpy.mock.calls.map(([message]) => message).join('\n');
-};
-
-const runException = async (inputs) => {
-  mockQuestions(inputs);
-  const logSpy = getLogSpy();
-  const app = new App();
-
-  await app.play();
-
-  expectLogContains(getOutput(logSpy), ['[ERROR]']);
 };
 
 const expectLogContains = (received, logs) => {
@@ -86,7 +94,7 @@ describe('다리 건너기 테스트', () => {
     });
 
     test('예외 테스트', async () => {
-      await runException(['a']);
+      await runException('a');
     });
   });
 });
